@@ -9,7 +9,7 @@ User.destroy_all
 
 puts "Creating Users..."
 alice = User.create!(username: "Alice", email_address: "alice@example.com", password: "password123", password_confirmation: "password123")
-bob = User.create!(email_address: "b@b.c", password: "password123", password_confirmation: "password123")
+bob = User.create!(username: "béb", email_address: "b@b.c", password: "password123", password_confirmation: "password123")
 raph = User.create!(username: "Raph", email_address: "a@b.c", password: "a", password_confirmation: "a")
 
 puts "Creating Groups..."

@@ -2,7 +2,7 @@
 
 <h4>Membres :
   <% @group.users.each do |user| %>
-    <%= (user.username || user.email_address) + " " %>
+    <%= user.username + " " %>
   <% end %>
 </h4>
 

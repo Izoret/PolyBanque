@@ -31,19 +31,13 @@
   </div>
 
   <h3>Participations</h3>
-  <%# Loop through participations (built in controller for new action) %>
   <%= form.fields_for :participations do |participation_form| %>
     <fieldset>
-      <legend>Participation for User <%= participation_form.object.user_id %></legend>
+      <legend>Participation de <%= participation_form.object.user.username %></legend>
 
       <%= participation_form.hidden_field :user_id %>
 
       <div>
-        <label>User ID: <%= participation_form.object.user_id %></label>
-      </div>
-
-      <div>
-        <%= participation_form.label :amount_share %>
         <%= participation_form.number_field :amount_share, step: 0.01 %>
       </div>
     </fieldset>
