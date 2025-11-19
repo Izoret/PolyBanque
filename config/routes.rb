@@ -10,6 +10,6 @@ Rails.application.routes.draw do
     post "quit", on: :member, action: :quit
     post "invite", on: :member, action: :invite_user
 
-    resources :operations, only: [ :index, :edit, :update, :new, :create ], shallow: true
+    resources :operations, only: [ :index, :edit, :update, :new, :create, :destroy ], shallow: true
   end
 end

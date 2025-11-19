@@ -39,6 +39,15 @@ class OperationsController < ApplicationController
     end
   end
 
+  def destroy
+    @operation = operation_in_query
+
+    @operation.group.operations.delete @operation
+    @operation.destroy
+
+    redirect_to group_operations_path @operation.group
+  end
+
   private
 
   def user_group_in_query

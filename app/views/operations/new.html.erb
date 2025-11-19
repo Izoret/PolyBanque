@@ -1,1 +1,3 @@
-<%= render "form", operation: @operation %>
+<% target = group_operations_path(@group) %>
+
+<%= render "form", operation: @operation, target: target %>
