@@ -1,9 +1,4 @@
 class OperationsController < ApplicationController
-  def index
-    @operations = Operation.where group: user_group_in_query
-    @group = user_group_in_query
-  end
-
   def new
     @group = user_group_in_query
     @operation = Operation.new
@@ -20,7 +15,7 @@ class OperationsController < ApplicationController
     @operation.group = @group
 
     if @operation.save
-      redirect_to edit_operation_path(@operation), notice: "Opération bien créée."
+      redirect_to @group, notice: "Opération bien créée."
     else
       render :new, status: :unprocessable_entity
     end
@@ -45,7 +40,7 @@ class OperationsController < ApplicationController
     @operation.group.operations.delete @operation
     @operation.destroy
 
-    redirect_to group_operations_path @operation.group
+    redirect_to @operation.group
   end
 
   private

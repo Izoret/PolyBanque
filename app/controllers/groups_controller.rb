@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = user_group_in_query
+    @operations = @group.operations
   end
 
   def new
