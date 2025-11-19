@@ -1,0 +1,24 @@
+<h2><%= @group.name %></h2>
+
+<h4>Membres :
+  <% @group.users.each do |user| %>
+    <%= (user.username || user.email_address) + " " %>
+  <% end %>
+</h4>
+
+<%= link_to "Opérations !", group_operations_path(@group) %>
+
+<%= form_with url: invite_group_path(@group), method: :post, local: true do |form| %>
+  <div class="field">
+    <%= form.label :user, "Inviter quelqu'un (email / username)" %>
+    <%= form.text_field :user, required: true %>
+  </div>
+
+  <%= form.submit "Inviter", class: "btn btn-primary" %>
+<% end %>
+
+<% if @group.users.length > 1 %>
+  <%= button_to "Quitter", quit_group_path(@group), method: :post, data: { turbo_confirm: "Cette action vous retirera du groupe, mais n'effacera pas vos dêtes." } %>
+<% else %>
+  <%= button_to "Supprimer", quit_group_path(@group), method: :post, data: { turbo_confirm: "Puisque vous êtes le seul membre actuel du groupe, cette action supprimera ce dernier." } %>
+<% end %>
