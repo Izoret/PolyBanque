@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :groups, only: [ :index, :new, :create, :show ] do
     post "quit", on: :member, action: :quit
     post "invite", on: :member, action: :invite_user
-    resources :operations, only: [ :index ]
+
+    resources :operations, only: [ :index, :edit, :update ], shallow: true
   end
 end

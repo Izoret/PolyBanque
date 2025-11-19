@@ -1,0 +1,48 @@
+<%= form_with(model: @operation) do |form| %>
+  <% if @operation.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
+      <ul>
+        <% @operation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :date %>
+    <%= form.datetime_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :total_amount %>
+    <%= form.number_field :total_amount, step: 0.01 %>
+  </div>
+
+  <h3>Participations</h3>
+  <%= form.fields_for :participations do |participation_form| %>
+    <fieldset>
+      <legend>Participation</legend>
+
+      <div>
+        <%= participation_form.label :user_id %>
+        <%= participation_form.number_field :user_id %>
+      </div>
+
+      <div>
+        <%= participation_form.label :amount_share %>
+        <%= participation_form.number_field :amount_share, step: 0.01 %>
+      </div>
+    </fieldset>
+  <% end %>
+
+  <div>
+    <%= form.submit "Save" %>
+  </div>
+<% end %>

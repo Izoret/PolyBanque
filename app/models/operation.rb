@@ -5,4 +5,5 @@ class Operation < ApplicationRecord
 
   has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user
+  accepts_nested_attributes_for :participations, allow_destroy: true
 end
