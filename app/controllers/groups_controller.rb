@@ -11,15 +11,6 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
-  def quit
-    @group = user_group_in_query
-    @group.users.delete(Current.user)
-
-    destroy @group if @group.users.empty?
-
-    redirect_to groups_path
-  end
-
   def create
     @group = Group.new(group_params)
     @group.users = [ Current.user ]
@@ -29,6 +20,15 @@ class GroupsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def quit
+    @group = user_group_in_query
+    @group.users.delete(Current.user)
+
+    destroy @group if @group.users.empty?
+
+    redirect_to groups_path
   end
 
   def invite_user

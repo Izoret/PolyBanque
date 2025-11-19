@@ -1,0 +1,63 @@
+<%
+  if operation.persisted?
+    form_url = operation_path(operation)
+  else
+    form_url = group_operations_path(@group)
+  end
+%>
+
+<%= form_with(model: operation, url: form_url, local: true) do |form| %>
+  <% if operation.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
+      <ul>
+        <% operation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# If creating a new operation, we need to pass the group_id context %>
+  <% if operation.new_record? && operation.group_id.present? %>
+    <%= hidden_field_tag :group_id, operation.group_id %>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :total_amount %>
+    <%= form.number_field :total_amount, step: 0.01 %>
+  </div>
+
+  <h3>Participations</h3>
+  <%# Loop through participations (built in controller for new action) %>
+  <%= form.fields_for :participations do |participation_form| %>
+    <fieldset>
+      <legend>Participation for User <%= participation_form.object.user_id %></legend>
+
+      <%= participation_form.hidden_field :user_id %>
+
+      <div>
+        <label>User ID: <%= participation_form.object.user_id %></label>
+      </div>
+
+      <div>
+        <%= participation_form.label :amount_share %>
+        <%= participation_form.number_field :amount_share, step: 0.01 %>
+      </div>
+    </fieldset>
+  <% end %>
+
+  <div>
+    <%= form.submit "Save" %>
+  </div>
+<% end %>
