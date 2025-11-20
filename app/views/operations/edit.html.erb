@@ -1,5 +1,5 @@
 <% target = operation_path(@operation) %>
 
-<%= render "form", operation: @operation, target: target %>
+<%= render "form", operation: @operation, target: target, editing: true %>
 
 <%= button_to "Supprimer", @operation, method: :delete, data: { turbo_confirm: "Assumeriez-vous une telle perte de patrimoine ? Cette action aura des conséquences." } %>

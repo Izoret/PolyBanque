@@ -1,5 +1,11 @@
 <%= link_to edit_operation_path(operation) do %>
-  <div class="operation">
-    <h3><%= operation.name %></h3>
+  <div class="operation card">
+    <div class="info">
+      <h3><%= operation.name %></h3>
+      <p><%= operation.date.strftime("%d/%m") if operation.date %></p>
+    </div>
+    <div class="amount">
+      <%= number_to_currency(operation.total_amount, unit: "€", format: "%n %u") %>
+    </div>
   </div>
 <% end %>

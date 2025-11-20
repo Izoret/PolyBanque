@@ -26,25 +26,28 @@
 <body>
 
 <header>
-  <h1>PolyBanque</h1>
-  <nav>
-    <%= link_to "Home", root_path %>
+  <%= link_to root_path do %>
+    <h1>PolyBanque</h1>
+  <% end %>
 
+  <nav>
     <% if authenticated? %>
       <h3>Hello, <%= Current.user.username %> !</h3>
-      <%= button_to "Log out", session_path, method: :delete %>
+      <%= button_to "Log out", session_path, method: :delete, class: "btn-logout" %>
     <% else %>
       <h3>Welcome, visitor !</h3>
     <% end %>
   </nav>
-
-  <%= render "layouts/flashes" %>
 </header>
-<hr>
-<%= yield %>
-<hr>
+
+<%= render "layouts/flashes" %>
+
+<main class="container">
+  <%= yield %>
+</main>
+
 <footer>
-  <%= link_to "Page précédente", _back_url %>
+  <%= link_to "← Retour", _back_url %>
 </footer>
 
 </body>

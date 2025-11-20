@@ -1,9 +1,17 @@
-<h2>Groupes de compte</h2>
-
-<div id="groups-list">
-  <%= render @groups %>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h2>Groupes</h2>
 </div>
 
-<%= link_to "Ajouter une PolyBanque", new_group_path,
-            id: "btn-add-group",
-            class: "button" %>
+<div id="groups-list">
+  <% if @groups.any? %>
+    <%= render @groups %>
+  <% else %>
+    <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+      Aucun groupe pour le moment.
+    </p>
+  <% end %>
+</div>
+
+<div style="margin-top: 20px;">
+  <%= link_to "Ajouter une PolyBanque", new_group_path, class: "button" %>
+</div>

@@ -20,10 +20,12 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :date %>
-    <%= form.date_field :date %>
-  </div>
+  <% if editing %>
+    <div>
+      <%= form.label :date %>
+      <%= form.date_field :date %>
+    </div>
+  <% end %>
 
   <div>
     <%= form.label :total_amount %>

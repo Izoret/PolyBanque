@@ -1,24 +1,43 @@
-<h2><%= @group.name %></h2>
+<div style="text-align: center; margin-bottom: 20px;">
+  <h2><%= @group.name %></h2>
 
-<h4>Membres :
-  <% @group.users.each do |user| %>
-    <%= user.username + " " %>
-  <% end %>
-</h4>
-
-<%= form_with url: invite_group_path(@group), method: :post, local: true do |form| %>
-  <div class="field">
-    <%= form.label :user, "Inviter quelqu'un (email / username)" %>
-    <%= form.text_field :user, required: true %>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px;">
+    <% @group.users.each do |user| %>
+      <span style="background: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; color: var(--text-muted);">
+        <%= user.username %>
+      </span>
+    <% end %>
   </div>
-
-  <%= form.submit "Inviter", class: "btn btn-primary" %>
-<% end %>
+</div>
 
 <%= render "operations/all", operations: @operations, group: @group %>
 
-<% if @group.users.length > 1 %>
-  <%= button_to "Quitter", quit_group_path(@group), method: :post, data: { turbo_confirm: "Cette action vous retirera du groupe, mais n'effacera pas vos dêtes." } %>
-<% else %>
-  <%= button_to "Supprimer", quit_group_path(@group), method: :post, data: { turbo_confirm: "Puisque vous êtes le seul membre actuel du groupe, cette action supprimera ce dernier." } %>
-<% end %>
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+<h3>Gestion du groupe</h3>
+
+<div class="card" style="display: block;">
+  <%= form_with url: invite_group_path(@group), method: :post, local: true do |form| %>
+    <div class="field">
+      <%= form.label :user, "Inviter un membre (email/username)" %>
+      <div style="display: flex; gap: 10px;">
+        <%= form.text_field :user, required: true, placeholder: "jean.dupont", style: "margin-bottom: 0;" %>
+        <%= form.submit "Inviter", class: "button", style: "width: auto;" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div style="margin-top: 20px;">
+  <% if @group.users.length > 1 %>
+    <%= button_to "Quitter le groupe", quit_group_path(@group), method: :post,
+        class: "button",
+        style: "background-color: transparent; color: var(--danger); border: 1px solid var(--danger);",
+        data: { turbo_confirm: "Attention : Vos dettes ne seront pas effacées." } %>
+  <% else %>
+    <%= button_to "Supprimer le groupe", quit_group_path(@group), method: :post,
+        class: "button",
+        style: "background-color: var(--danger);",
+        data: { turbo_confirm: "Supprimer définitivement ce groupe ?" } %>
+  <% end %>
+</div>

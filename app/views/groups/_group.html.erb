@@ -1,6 +1,9 @@
-<%= link_to group do %>
-  <div class="group">
-    <h3><%= group.name %></h3>
-    <p><%= group.description %></p>
+<%= link_to group, style: "display: block; text-decoration: none;" do %>
+  <div class="group card">
+    <div>
+      <h3><%= group.name %></h3>
+      <p><%= group.description.truncate(40) if group.description? %></p>
+    </div>
+    <div style="color: var(--text-muted);">&rsaquo;</div>
   </div>
 <% end %>
