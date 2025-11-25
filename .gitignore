@@ -35,6 +35,5 @@
 
 /node_modules/
 *.swp
-/vendor/
 /.idea/
 
