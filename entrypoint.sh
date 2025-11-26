@@ -7,8 +7,8 @@ until bin/rails db:version 2>/dev/null; do
   sleep 1
 done
 
-#bin/rails db:drop
-#bin/rails db:schema:load
-#bin/rails db:seed
+bin/rails db:drop
+bin/rails db:schema:load
+bin/rails db:seed
 
 exec "$@"

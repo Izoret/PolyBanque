@@ -19,9 +19,9 @@
 <div class="card" style="display: block;">
   <%= form_with url: invite_group_path(@group), method: :post, local: true do |form| %>
     <div class="field">
-      <%= form.label :user, "Inviter un membre (email/username)" %>
+      <%= form.label :user, "Inviter un membre (email)" %>
       <div style="display: flex; gap: 10px;">
-        <%= form.text_field :user, required: true, placeholder: "jean.dupont", style: "margin-bottom: 0;" %>
+        <%= form.text_field :user, required: true, placeholder: "jean@du.pont", style: "margin-bottom: 0;" %>
         <%= form.submit "Inviter", class: "button", style: "width: auto;" %>
       </div>
     </div>

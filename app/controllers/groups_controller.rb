@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
   def invite_user
     group = user_group_in_query
     user_param = params[:user]
-    user = User.find_by(email_address: user_param) || User.find_by(username: user_param)
+    user = User.find_by(email_address: user_param)
 
     if user.nil?
       redirect_to group_path(group), alert: "Utilisateur introuvable."
