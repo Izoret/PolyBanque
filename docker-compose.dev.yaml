@@ -4,16 +4,16 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: polybanque
-    container_name: polybanque
+      dockerfile: Dockerfile.dev
+    image: polybanque-dev
+    container_name: polybanque-dev
     ports:
       - "3002:3000"
     volumes:
       - .:/rails
     environment:
-      RAILS_ENV: production
-        #command: bin/rails server -b 0.0.0.0
+      RAILS_ENV: development
+    command: bin/rails server -b 0.0.0.0
     stdin_open: true
     tty: true
 
