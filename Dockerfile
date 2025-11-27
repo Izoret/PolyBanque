@@ -69,8 +69,8 @@ COPY --chown=rails:rails --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --chown=rails:rails --from=build /rails /rails
 
 # Entrypoint prepares the database.
-#ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
-#EXPOSE 80
-#CMD ["./bin/thrust", "./bin/rails", "server"]
+EXPOSE 80
+CMD ["./bin/thrust", "./bin/rails", "server"]

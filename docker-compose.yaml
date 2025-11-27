@@ -1,19 +1,35 @@
 version: "3.9"
 
 services:
+  db:
+    image: postgres:15
+    container_name: polybanque_db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: polybanque
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
     image: polybanque
-    container_name: polybanque
+    container_name: polybanque_web
     ports:
       - "3002:3000"
     volumes:
       - .:/rails
+    depends_on:
+      - db
     environment:
-      RAILS_ENV: production
-        #command: bin/rails server -b 0.0.0.0
+      - RAILS_ENV=production
+      - DATABASE_URL=postgres://root:root@db:5432/polybanque
+      - RAILS_MASTER_KEY=1e264549d4f59d1d11e21be49fb3db5b
     stdin_open: true
     tty: true
 
+volumes:
+  postgres_data:
