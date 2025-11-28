@@ -8,6 +8,8 @@
       </span>
     <% end %>
   </div>
+
+  <%= content_tag(:h4, @group.description) if @group.description? %>
 </div>
 
 <%= render "operations/all", operations: @operations, group: @group %>
@@ -31,13 +33,13 @@
 <div style="margin-top: 20px;">
   <% if @group.users.length > 1 %>
     <%= button_to "Quitter le groupe", quit_group_path(@group), method: :post,
-        class: "button",
-        style: "background-color: transparent; color: var(--danger); border: 1px solid var(--danger);",
-        data: { turbo_confirm: "Attention : Vos dettes ne seront pas effacées." } %>
+                  class: "button",
+                  style: "background-color: transparent; color: var(--danger); border: 1px solid var(--danger);",
+                  data: { turbo_confirm: "Attention : Vos dettes ne seront pas effacées." } %>
   <% else %>
     <%= button_to "Supprimer le groupe", quit_group_path(@group), method: :post,
-        class: "button",
-        style: "background-color: var(--danger);",
-        data: { turbo_confirm: "Supprimer définitivement ce groupe ?" } %>
+                  class: "button",
+                  style: "background-color: var(--danger);",
+                  data: { turbo_confirm: "Supprimer définitivement ce groupe ?" } %>
   <% end %>
 </div>
