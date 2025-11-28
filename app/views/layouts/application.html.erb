@@ -32,10 +32,10 @@
 
   <nav>
     <% if authenticated? %>
-      <h3>Hello, <%= Current.user.username %> !</h3>
-      <%= button_to "Log out", session_path, method: :delete, class: "btn-logout" %>
+      <h3>Coucou, <%= Current.user.username %> !</h3>
+      <%= button_to "Déconnexion", session_path, method: :delete, class: "btn-logout" %>
     <% else %>
-      <h3>Welcome, visitor !</h3>
+      <h3>Bienvenue, voyageur !</h3>
     <% end %>
   </nav>
 </header>
