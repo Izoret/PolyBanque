@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_28_000000) do
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -23,8 +23,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
     t.integer "group_id", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index [ "group_id" ], name: "index_memberships_on_group_id"
-    t.index [ "user_id" ], name: "index_memberships_on_user_id"
+    t.index ["group_id"], name: "index_memberships_on_group_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "operations", force: :cascade do |t|
@@ -35,8 +35,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
     t.string "name"
     t.decimal "total_amount", precision: 10, scale: 2
     t.datetime "updated_at", null: false
-    t.index [ "author_id" ], name: "index_operations_on_author_id"
-    t.index [ "group_id" ], name: "index_operations_on_group_id"
+    t.index ["author_id"], name: "index_operations_on_author_id"
+    t.index ["group_id"], name: "index_operations_on_group_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -45,8 +45,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
     t.integer "operation_id", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index [ "operation_id" ], name: "index_participations_on_operation_id"
-    t.index [ "user_id" ], name: "index_participations_on_user_id"
+    t.index ["operation_id"], name: "index_participations_on_operation_id"
+    t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -55,7 +55,19 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
     t.datetime "updated_at", null: false
     t.string "user_agent"
     t.integer "user_id", null: false
-    t.index [ "user_id" ], name: "index_sessions_on_user_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.integer "byte_size", limit: 4, null: false
+    t.datetime "created_at", null: false
+    t.binary "key", limit: 1024, null: false
+    t.integer "key_hash", limit: 8, null: false
+    t.binary "value", limit: 536870912, null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["created_at"], name: "index_solid_cache_entries_on_created_at"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,7 +76,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_124900) do
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false
     t.string "username", null: false
-    t.index [ "email_address" ], name: "index_users_on_email_address", unique: true
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "memberships", "groups"
