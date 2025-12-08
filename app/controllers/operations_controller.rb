@@ -4,6 +4,8 @@ class OperationsController < ApplicationController
 
   def new
     @operation = Operation.new
+    @operation.group = @group
+    @operation.author = Current.user
 
     @group.users.each do |user|
       @operation.participations.build(user: user)
@@ -61,6 +63,7 @@ class OperationsController < ApplicationController
     params.require(:operation).permit(
       :name,
       :date,
+      :author_id,
       :total_amount,
       participations_attributes: [ :id, :user_id, :amount_share ]
     )
