@@ -13,11 +13,11 @@ class GroupsController < ApplicationController
     @group.operations.each do |operation|
       if operation.author == Current.user
         operation.participations.where.not(user: Current.user).each do |participation|
-          @balance[participation.user] -= participation.amount_share
+          @balance[participation.user] -= (participation.amount_share || 0)
         end
       else
         operation.participations.where(user: Current.user).each do |participation|
-          @balance[operation.author] += participation.amount_share
+          @balance[operation.author] += (participation.amount_share || 0)
         end
       end
     end
