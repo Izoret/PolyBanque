@@ -1,6 +1,4 @@
-<% content_for :page_header do %>
-  <%= @operation.group.name %> - <%= @operation.name %>
-<% end %>
+<% page_header "#{@operation.group.name} - #{@operation.name}" %>
 
 <%= render "form", operation: @operation, target: operation_path(@operation), editing: true %>
 
