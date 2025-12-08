@@ -1,5 +1,5 @@
-<h2>Nouvelle PolyBanque</h2>
+<% content_for :page_header do %>
+  Nouvelle PolyBanque
+<% end %>
 
 <%= render "form", group: @group %>
-
-<%= link_to "Retour", groups_path %>

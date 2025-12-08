@@ -1,3 +1,5 @@
-<% target = group_operations_path(@group) %>
+<% content_for :page_header do %>
+  <%= @group.name %> - Nouvelle opération
+<% end %>
 
-<%= render "form", operation: @operation, target: target, editing: false %>
+<%= render "form", operation: @operation, target: group_operations_path(@group), editing: false %>

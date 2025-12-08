@@ -25,20 +25,7 @@
 
 <body>
 
-<header>
-  <%= link_to root_path do %>
-    <h1>PolyBanque</h1>
-  <% end %>
-
-  <nav>
-    <% if authenticated? %>
-      <h3>Coucou, <%= Current.user.username %> !</h3>
-      <%= button_to "Déconnexion", session_path, method: :delete, class: "btn-logout" %>
-    <% else %>
-      <h3>Bienvenue, voyageur !</h3>
-    <% end %>
-  </nav>
-</header>
+<%= render "layouts/header" %>
 
 <%= render "layouts/flashes" %>
 
@@ -46,9 +33,7 @@
   <%= yield %>
 </main>
 
-<footer>
-  <%= link_to "← Retour", _back_url %>
-</footer>
+<%= render "layouts/footer" %>
 
 </body>
 </html>
