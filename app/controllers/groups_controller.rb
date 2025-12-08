@@ -1,12 +1,10 @@
 class GroupsController < ApplicationController
+  before_action :set_group, only: [:show, :quit, :show_balance, :invite_user]
   def index
     @groups = Current.user.groups
   end
 
   def show
-    @group = user_group_in_query
-    puts "------"
-    puts @group
     @operations = @group.operations
   end
 
@@ -26,7 +24,6 @@ class GroupsController < ApplicationController
   end
 
   def quit
-    @group = user_group_in_query
     @group.users.delete(Current.user)
 
     destroy @group if @group.users.empty?
@@ -35,29 +32,26 @@ class GroupsController < ApplicationController
   end
 
   def invite_user
-    group = user_group_in_query
     user_param = params[:user]
     user = User.find_by(email_address: user_param)
 
     if user.nil?
-      redirect_to group_path(group), alert: "Utilisateur introuvable."
-    elsif group.users.include?(user)
-      redirect_to group_path(group), alert: "Cet utilisateur est déjà membre du groupe."
+      redirect_to group_path(@group), alert: "Utilisateur introuvable."
+    elsif @group.users.include?(user)
+      redirect_to group_path(@group), alert: "Cet utilisateur est déjà membre du groupe."
     else
-      group.users << user
-      redirect_to group_path(group), notice: "Utilisateur invité avec succès."
+      @group.users << user
+      redirect_to group_path(@group), notice: "Utilisateur invité avec succès."
     end
   end
 
   def show_balance
-    @group = user_group_in_query
-
   end
 
   private
 
-  def user_group_in_query
-    Current.user.groups.find(params[:id])
+  def set_group
+    @group = Current.user.groups.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to groups_path, alert: "Groupe introuvable."
   end

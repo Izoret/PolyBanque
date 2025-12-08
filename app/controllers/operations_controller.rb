@@ -1,6 +1,8 @@
 class OperationsController < ApplicationController
+  before_action :set_operation, only: [ :edit, :update, :destroy ]
+  before_action :set_group, only: [ :new, :create ]
+
   def new
-    @group = user_group_in_query
     @operation = Operation.new
 
     @group.users.each do |user|
@@ -9,7 +11,6 @@ class OperationsController < ApplicationController
   end
 
   def create
-    @group = user_group_in_query
     @operation = Operation.new(operation_params)
     @operation.author = Current.user
     @operation.group = @group
@@ -23,11 +24,9 @@ class OperationsController < ApplicationController
   end
 
   def edit
-    @operation = operation_in_query
   end
 
   def update
-    @operation = operation_in_query
     if @operation.update(operation_params)
       redirect_to edit_operation_path(@operation), notice: "Opération bien mise à jour."
     else
@@ -36,8 +35,6 @@ class OperationsController < ApplicationController
   end
 
   def destroy
-    @operation = operation_in_query
-
     @operation.group.operations.delete @operation
     @operation.destroy
 
@@ -46,18 +43,16 @@ class OperationsController < ApplicationController
 
   private
 
-  def user_group_in_query
-    Current.user.groups.find(params[:group_id])
+  def set_group
+    @group = Current.user.groups.find(params[:group_id])
   rescue ActiveRecord::RecordNotFound
     redirect_to groups_path, alert: "Groupe introuvable."
   end
 
-  def operation_in_query
-    operation = Operation.find params[:id]
+  def set_operation
+    @operation = Operation.find params[:id]
 
-    raise ActiveRecord::RecordNotFound unless operation.group.in?(Current.user.groups)
-
-    operation
+    raise ActiveRecord::RecordNotFound unless @operation.group.in?(Current.user.groups)
   rescue ActiveRecord::RecordNotFound
     redirect_to groups_path, alert: "Opération introuvable."
   end
