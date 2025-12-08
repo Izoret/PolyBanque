@@ -1,11 +1,10 @@
 <footer>
   <% if content_for? :page_footer
-       route = "e"
+       route = yield :page_footer
      else
        route = root_path
      end
   %>
-  <h3><%= route %></h3>
 
-  <%# link_to "← Retour", footer_back_path %>
+  <%= link_to "← Retour", route %>
 </footer>
