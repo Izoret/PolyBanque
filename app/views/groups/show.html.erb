@@ -12,7 +12,7 @@
   <%= content_tag(:h4, @group.description) if @group.description? %>
 </div>
 
-<%= render "operations/all", operations: @operations, group: @group %>
+<%= render "operations/all", operations: @operations.sort_by(&:date).reverse, group: @group %>
 
 <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
 

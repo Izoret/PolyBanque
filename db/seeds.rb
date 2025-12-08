@@ -27,19 +27,15 @@ Membership.create!(user: bob, group: ski_trip)
 Membership.create!(user: raph, group: ski_trip)
 Membership.create!(user: raph, group: italie)
 
-# 5. Create Operations and Participations
-
-# Scenario A: Alice pays for a Welcome Dinner ($150), split equally among all 3.
 puts "Creating Operation: Welcome Dinner..."
 dinner_op = Operation.create!(
   name: "Welcome Dinner",
   total_amount: 150.00,
   date: DateTime.now - 2.days,
   group: ski_trip,
-  author: alice # Alice is the 'AuthorOfOperation' (The Payer)
+  author: alice
 )
 
-# Create the shares (Participants)
 [ alice, bob, raph ].each do |user|
   Participation.create!(
     user: user,
@@ -48,15 +44,24 @@ dinner_op = Operation.create!(
   )
 end
 
-# Scenario B: Bob pays for Gas ($60), split only between Bob and Charlie (Alice didn't come in the car).
 puts "Creating Operation: Gas..."
 gas_op = Operation.create!(
   name: "Gas for the drive up",
   total_amount: 60.00,
   date: DateTime.now - 3.days,
   group: ski_trip,
-  author: bob # Bob is the 'AuthorOfOperation'
+  author: bob
 )
+
+puts "Creating Operation: test..."
+gas_op = Operation.create!(
+  name: "test",
+  total_amount: 60.00,
+  date: DateTime.now - 1.days,
+  group: ski_trip,
+  author: bob
+)
+
 
 # Only Bob and Charlie participate in this cost
 Participation.create!(user: bob, operation: gas_op, amount_share: 30.00)
