@@ -12,12 +12,6 @@
   <%= content_tag(:h4, @group.description) if @group.description? %>
 </div>
 
-<%= render "operations/all", operations: @operations.sort_by(&:date).reverse, group: @group %>
-
-<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-
-<h3>Gestion du groupe</h3>
-
 <div class="card" style="display: block;">
   <%= form_with url: invite_group_path(@group), method: :post, local: true do |form| %>
     <div class="field">
@@ -29,6 +23,14 @@
     </div>
   <% end %>
 </div>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+<%= link_to "Balance", balance_group_path %>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+<%= render "operations/all", operations: @operations.sort_by(&:date).reverse, group: @group %>
 
 <div style="margin-top: 20px;">
   <% if @group.users.length > 1 %>

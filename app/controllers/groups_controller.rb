@@ -49,6 +49,11 @@ class GroupsController < ApplicationController
     end
   end
 
+  def show_balance
+    @group = user_group_in_query
+
+  end
+
   private
 
   def user_group_in_query

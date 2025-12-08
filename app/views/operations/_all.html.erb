@@ -1,11 +1,13 @@
 <div id="operations-section">
-  <h3>Opérations du groupe</h3>
+  <%= link_to "Nouvelle opération", new_group_operation_path(group),
+              id: "btn-add-operation",
+              class: "button" %>
+
+  <% if operations.length > 0 %>
+    <h3>Opérations précédentes</h3>
+  <% end %>
 
   <div id="operations-list">
     <%= render operations %>
   </div>
-
-  <%= link_to "Créer une opération", new_group_operation_path(group),
-              id: "btn-add-operation",
-              class: "button" %>
 </div>
