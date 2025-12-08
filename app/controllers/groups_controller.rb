@@ -1,11 +1,26 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :quit, :show_balance, :invite_user]
+  before_action :set_group, only: [ :show, :quit, :invite_user ]
+
   def index
     @groups = Current.user.groups
   end
 
   def show
     @operations = @group.operations
+
+    @balance = (@group.users - [ Current.user ]).to_h { |user| [ user, 0 ] }
+
+    @group.operations.each do |operation|
+      if operation.author == Current.user
+        operation.participations.where.not(user: Current.user).each do |participation|
+          @balance[participation.user] -= participation.amount_share
+        end
+      else
+        operation.participations.where(user: Current.user).each do |participation|
+          @balance[operation.author] += participation.amount_share
+        end
+      end
+    end
   end
 
   def new
@@ -43,9 +58,6 @@ class GroupsController < ApplicationController
       @group.users << user
       redirect_to group_path(@group), notice: "Utilisateur invité avec succès."
     end
-  end
-
-  def show_balance
   end
 
   private
