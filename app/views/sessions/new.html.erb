@@ -1,3 +1,5 @@
+<% page_header "Se connecter" %>
+
 <%= form_with url: session_path do |form| %>
   <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "Entrer e-mail.", value: params[:email_address] %>
   <br>
@@ -8,4 +10,5 @@
 <br>
 
 <%= link_to "Pas de compte ?", sign_up_path %>
+<br>
 <%= link_to "Mdp oublié ?", new_password_path %>

@@ -1,4 +1,4 @@
-<h1>Sign Up</h1>
+<% page_header "Inscription" %>
 
 <%= form_with model: @user, url: sign_up_path do |form| %>
   <% if form.object.errors.any? %>
