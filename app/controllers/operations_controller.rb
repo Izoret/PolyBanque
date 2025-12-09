@@ -26,6 +26,11 @@ class OperationsController < ApplicationController
   end
 
   def edit
+    existing_user_ids = @operation.participations.pluck(:user_id)
+
+    @operation.group.users.each do |user|
+      @operation.participations.build(user: user) unless existing_user_ids.include?(user.id)
+    end
   end
 
   def update
