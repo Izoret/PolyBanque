@@ -1,4 +1,4 @@
-<%= form_with(model: operation, url: target, local: true) do |form| %>
+<%= form_with(model: operation, url: target, local: true, data: { controller: 'operation-form' }) do |form| %>
   <% if operation.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <%# If creating a new operation, we need to pass the group_id context %>
+  <%# TODO check is useful %>
   <% if operation.new_record? && operation.group_id.present? %>
     <%= hidden_field_tag :group_id, operation.group_id %>
   <% end %>
@@ -34,23 +34,30 @@
 
   <div>
     <%= form.label :total_amount %>
-    <%= form.number_field :total_amount, step: 0.01 %>
+    <%= form.number_field :total_amount, step: 0.1, data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
+  </div>
+
+  <div>
+    <button type="button" data-action="click->operation-form#splitEqually">Partager équitablement</button>
   </div>
 
   <h3>Participations</h3>
   <%= form.fields_for :participations do |participation_form| %>
-    <fieldset>
+    <fieldset data-operation-form-target="participationField">
       <legend>Participation de <%= participation_form.object.user.username %></legend>
 
       <%= participation_form.hidden_field :user_id %>
 
       <div>
-        <%= participation_form.number_field :amount_share, step: 0.01 %>
+        <%= participation_form.number_field :amount_share, step: 0.1, data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#checkValidity' } %>
       </div>
     </fieldset>
   <% end %>
 
+  <div data-operation-form-target="validationMessage" style="color: red;">
+  </div>
+
   <div>
-    <%= form.submit "Save" %>
+    <%= form.submit "Save", data: { 'operation-form-target': 'submitButton' } %>
   </div>
 <% end %>
