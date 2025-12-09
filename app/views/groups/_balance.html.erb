@@ -1,6 +1,12 @@
 <h2>Votre balance :</h2>
 <ul>
   <% @balance.each_pair do |user, value| %>
-    <li><%= user.username %> : <%= value %> €</li>
+    <li>
+      <% if value < 0 %>
+        <%= user.username %> vous doit <%= -1 * value %> €
+      <% else %>
+        Vous devez <%= value %> € à <%= user.username %>
+      <% end %>
+    </li>
   <% end %>
 </ul>

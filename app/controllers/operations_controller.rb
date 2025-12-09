@@ -35,7 +35,7 @@ class OperationsController < ApplicationController
 
   def update
     if @operation.update(operation_params)
-      redirect_to edit_operation_path(@operation), notice: "Opération bien mise à jour."
+      redirect_to group_path(@operation.group), notice: "Opération bien mise à jour."
     else
       render :edit, status: :unprocessable_entity
     end

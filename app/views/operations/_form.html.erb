@@ -34,7 +34,7 @@
 
   <div>
     <%= form.label :total_amount %>
-    <%= form.number_field :total_amount, step: 0.1, data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
+    <%= form.number_field :total_amount, step: 0.01, data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
   </div>
 
   <div>
@@ -49,7 +49,7 @@
       <%= participation_form.hidden_field :user_id %>
 
       <div>
-        <%= participation_form.number_field :amount_share, step: 0.1, data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#checkValidity' } %>
+        <%= participation_form.number_field :amount_share, step: 0.01, data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#checkValidity' } %>
       </div>
     </fieldset>
   <% end %>
