@@ -15,9 +15,7 @@ class OperationsController < ApplicationController
 
   def create
     @operation = Operation.new(operation_params)
-    @operation.author = Current.user
     @operation.group = @group
-    @operation.date = Date.today
 
     if @operation.save
       redirect_to @group, notice: "Opération bien créée."
