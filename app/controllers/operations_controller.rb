@@ -6,6 +6,7 @@ class OperationsController < ApplicationController
     @operation = Operation.new
     @operation.group = @group
     @operation.author = Current.user
+    @operation.date = Date.today
 
     @group.users.each do |user|
       @operation.participations.build(user: user)

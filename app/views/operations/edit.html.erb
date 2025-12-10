@@ -1,6 +1,6 @@
 <% page_header "#{@operation.group.name} - #{@operation.name}" %>
 
-<%= render "form", operation: @operation, target: operation_path(@operation), editing: true %>
+<%= render "form", operation: @operation, target: operation_path(@operation) %>
 
 <%= button_to "Supprimer", @operation, method: :delete, data: { turbo_confirm: "Assumeriez-vous une telle perte de patrimoine ? Cette action aura des conséquences." } %>
 

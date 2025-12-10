@@ -1,5 +1,5 @@
 <% page_header "#{@group.name} - Nouvelle opération" %>
 
-<%= render "form", operation: @operation, target: group_operations_path(@group), editing: false %>
+<%= render "form", operation: @operation, target: group_operations_path(@group) %>
 
 <% page_footer group_path @group %>
