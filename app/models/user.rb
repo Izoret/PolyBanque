@@ -19,7 +19,7 @@ class User < ApplicationRecord
     group.operations.each do |op|
       total += op.participations.sum(:amount_share) if op.author == self
 
-      total -= op.participations.find_by(user: self)&.amount_share.to_i
+      total -= op.participations.find_by(user: self)&.amount_share.to_f
     end
     total
   end

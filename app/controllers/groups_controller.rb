@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
     end
 
     n = 0
-    until (@steps[n] = "Parfait !") and @trace[n].values.all? { |v| v == 0 } do
+    until (@steps[n] = "Parfait !") and @trace[n].values.all? { |v| v <= 0.02 } do
       richest = @trace[n].max_by { |_, v| v }
       poorest = @trace[n].min_by { |_, v| v }
 
