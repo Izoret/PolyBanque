@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [ :show, :quit, :invite_user ]
+  before_action :set_group, only: [ :show, :quit, :invite_user, :transactions_algorithm ]
 
   def index
     @groups = Current.user.groups
@@ -7,19 +7,31 @@ class GroupsController < ApplicationController
 
   def show
     @operations = @group.operations
+  end
 
-    @balance = (@group.users - [ Current.user ]).to_h { |user| [ user, 0 ] }
+  def transactions_algorithm
+    @trace = []
+    @steps = []
 
-    @group.operations.each do |operation|
-      if operation.author == Current.user
-        operation.participations.where.not(user: Current.user).each do |participation|
-          @balance[participation.user] -= (participation.amount_share || 0)
-        end
-      else
-        operation.participations.where(user: Current.user).each do |participation|
-          @balance[operation.author] += (participation.amount_share || 0)
-        end
-      end
+    @trace[0] = {}
+
+    @group.users.each do |user|
+      @trace[0][user] = user.get_balance_in_group @group
+    end
+
+    n = 0
+    until (@steps[n] = "Parfait !") and @trace[n].values.all? { |v| v == 0 } do
+      puts "FUCK YOU"
+      richest = @trace[n].max_by { |_, v| v }
+      poorest = @trace[n].min_by { |_, v| v }
+
+      @steps[n] = "#{poorest[0].username} paye #{-poorest[1]} € à #{richest[0].username}"
+
+      @trace[n + 1] = @trace[n].dup
+      @trace[n + 1][poorest[0]] -= poorest[1]
+      @trace[n + 1][richest[0]] += poorest[1]
+
+      n += 1
     end
   end
 

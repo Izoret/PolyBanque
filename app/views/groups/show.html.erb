@@ -11,8 +11,8 @@
 
   <%= content_tag(:h4, @group.description) if @group.description? %>
 
-  <h4>Dépenses totales du groupe : <%= @group.operations.sum :total_amount %></h4>
-  <h4>Mes dépenses totales : <%= @group.operations.where(author: Current.user).sum :total_amount %></h4>
+  <h4>Dépenses totales du groupe : <%= @group.total_expenses %></h4>
+  <h4>Mes dépenses totales : <%= @group.total_expenses_of Current.user %></h4>
 </div>
 
 <div class="card" style="display: block;">

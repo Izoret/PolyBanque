@@ -1,12 +1,20 @@
-<h2>Votre balance :</h2>
-<ul>
-  <% @balance.each_pair do |user, value| %>
-    <li>
-      <% if value < 0 %>
-        <%= user.username %> vous doit <%= -1 * value %> €
-      <% else %>
-        Vous devez <%= value %> € à <%= user.username %>
-      <% end %>
-    </li>
+<h3>Votre balance :</h3>
+<div>
+  <h4>
+    <% total = Current.user.get_balance_in_group @group %>
+    <%= "+" if total > 0 %><%= total %> €
+  </h4>
+</div>
+
+<%= link_to "Algo remboursement", calculator_group_path %>
+
+<h3>Balances des autres :</h3>
+<div style="display: flex; flex-direction: row;">
+  <% @group.users.where.not(id: Current.user.id).each do |user| %>
+    <div style="margin-right: 30px;">
+      <% total = user.get_balance_in_group @group %>
+
+      <%= user.username %> : <%= "+" if total > 0 %><%= total %> €
+    </div>
   <% end %>
-</ul>
+</div>

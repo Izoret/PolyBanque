@@ -13,4 +13,14 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :username, presence: true
+
+  def get_balance_in_group(group)
+    total = 0
+    group.operations.each do |op|
+      total += op.participations.sum(:amount_share) if op.author == self
+
+      total -= op.participations.find_by(user: self)&.amount_share.to_i
+    end
+    total
+  end
 end

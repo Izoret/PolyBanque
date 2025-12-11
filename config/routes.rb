@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :groups, only: [ :index, :new, :create, :show ] do
     post "quit", on: :member, action: :quit
     post "invite", on: :member, action: :invite_user
+    get "calculator", on: :member, action: :transactions_algorithm
 
     resources :operations, only: [ :edit, :update, :new, :create, :destroy ], shallow: true
   end
