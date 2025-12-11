@@ -21,9 +21,12 @@ class GroupsController < ApplicationController
 
     n = 0
     until (@steps[n] = "Parfait !") and @trace[n].values.all? { |v| v == 0 } do
-      puts "FUCK YOU"
       richest = @trace[n].max_by { |_, v| v }
       poorest = @trace[n].min_by { |_, v| v }
+
+      if -poorest[1] > richest[1]
+        poorest[1] = -richest[1]
+      end
 
       @steps[n] = "#{poorest[0].username} paye #{-poorest[1]} € à #{richest[0].username}"
 

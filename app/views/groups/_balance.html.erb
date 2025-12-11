@@ -9,7 +9,7 @@
 <%= link_to "Algo remboursement", calculator_group_path %>
 
 <h3>Balances des autres :</h3>
-<div style="display: flex; flex-direction: row;">
+<div style="display: flex;">
   <% @group.users.where.not(id: Current.user.id).each do |user| %>
     <div style="margin-right: 30px;">
       <% total = user.get_balance_in_group @group %>
