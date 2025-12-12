@@ -10,11 +10,6 @@
     </div>
   <% end %>
 
-  <%# TODO check is useful %>
-  <% if operation.new_record? && operation.group_id.present? %>
-    <%= hidden_field_tag :group_id, operation.group_id %>
-  <% end %>
-
   <div>
     <%= form.label :name, "Nom" %>
     <%= form.text_field :name %>

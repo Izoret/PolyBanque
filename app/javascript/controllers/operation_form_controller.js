@@ -14,7 +14,8 @@ export default class extends Controller {
 
         const isTotalValid = total > 0
 
-        const isSumValid = Math.abs(diff) <= 0.011
+        console.log("diff : " + Math.abs(diff))
+        const isSumValid = Math.abs(diff) <= 0.1
 
         const isValid = isTotalValid && isSumValid
         this.submitButtonTarget.disabled = !isValid
