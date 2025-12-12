@@ -7,6 +7,12 @@ export default class extends Controller {
         this.checkValidity()
     }
 
+    selectAll() {
+        this.participationToggleTargets.forEach((checkbox) => {
+            checkbox.checked = true
+        })
+    }
+
     splitEqually() {
         const total = this.getTotalAmount()
 
