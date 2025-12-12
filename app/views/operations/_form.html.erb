@@ -25,32 +25,48 @@
     <%= form.collection_select :author_id, operation.group.users, :id, :username %>
   </div>
 
+  <hr>
+
   <div>
     <%= form.label :total_amount %>
     <%= form.number_field :total_amount, step: 0.01, data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
   </div>
 
-  <div>
+  <div style="margin-bottom: 20px;">
     <button type="button" data-action="click->operation-form#splitEqually">Partager équitablement</button>
   </div>
 
   <h3>Participations</h3>
-  <%= form.fields_for :participations do |participation_form| %>
-    <fieldset data-operation-form-target="participationField">
-      <legend>Participation de <%= participation_form.object.user.username %></legend>
 
-      <%= participation_form.hidden_field :user_id %>
+  <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+    <%= form.fields_for :participations do |participation_form| %>
+      <fieldset class="participation-wrapper" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; flex: 1; min-width: 150px; text-align: center;">
 
-      <div>
-        <%= participation_form.number_field :amount_share, step: 0.01, data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#checkValidity' } %>
-      </div>
-    </fieldset>
-  <% end %>
+        <div style="margin-bottom: 5px;">
+          <label style="font-size: 0.9em; cursor: pointer;">
+            <input type="checkbox"
+                   checked
+                   data-operation-form-target="participationToggle"
+                   data-action="change->operation-form#toggleParticipation">
+            Participe
+          </label>
+        </div>
 
-  <div data-operation-form-target="validationMessage" style="color: red;">
+        <legend style="font-weight: bold; margin-bottom: 5px;"><%= participation_form.object.user.username %></legend>
+
+        <%= participation_form.hidden_field :user_id %>
+
+        <div>
+          <%= participation_form.number_field :amount_share, step: 0.01, style: "width: 100%; box-sizing: border-box;", data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#onAmountInput' } %>
+        </div>
+      </fieldset>
+    <% end %>
   </div>
 
-  <div>
+  <div data-operation-form-target="validationMessage" style="color: red; margin-top: 20px;">
+  </div>
+
+  <div style="margin-top: 20px;">
     <%= form.submit "Save", data: { 'operation-form-target': 'submitButton' } %>
   </div>
 <% end %>
