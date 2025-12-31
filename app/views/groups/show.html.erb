@@ -8,7 +8,9 @@
   </div>
 
   <div class="mt-2 text-sm text-muted">
-    Total groupe : <span class="font-mono text-main"><%= number_to_currency(@group.total_expenses, unit: "€") %></span>
+    Total groupe : <span class="font-mono text-main"><%= @group.total_expenses %> €</span>
+    <br>
+    Total personnel : <span class="font-mono text-main"><%= @group.total_expenses_of Current.user %> €</span>
   </div>
 </div>
 
