@@ -1,20 +1,26 @@
-<h3>Votre balance :</h3>
-<div>
-  <h4>
-    <% total = Current.user.get_balance_in_group @group %>
-    <%= "+" if total > 0 %><%= total %> €
-  </h4>
+<% my_total = Current.user.get_balance_in_group @group %>
+<% is_positive = my_total >= 0 %>
+
+<div class="card balance-hero <%= is_positive ? 'positive' : 'negative' %>">
+  <p class="text-muted text-sm">Votre Balance</p>
+
+  <div class="font-mono balance-amount <%= is_positive ? 'text-success' : 'text-danger' %>">
+    <%= is_positive ? "+" : "" %><%= number_to_currency(my_total, unit: "€", format: "%n %u") %>
+  </div>
+
+  <%= link_to calculator_group_path, class: "flex items-center justify-center gap-1 text-sm text-muted" do %>
+    <span>Voir qui doit quoi &rarr;</span>
+  <% end %>
 </div>
 
-<%= link_to "Algo remboursement", calculator_group_path %>
-
-<h3>Balances des autres :</h3>
-<div style="display: flex;">
+<div class="flex gap-2 balance-scroll-container">
   <% @group.users.where.not(id: Current.user.id).each do |user| %>
-    <div style="margin-right: 30px;">
-      <% total = user.get_balance_in_group @group %>
-
-      <%= user.username %> : <%= "+" if total > 0 %><%= total %> €
+    <% total = user.get_balance_in_group @group %>
+    <div class="card balance-mini-card">
+      <p class="text-sm font-bold mb-2"><%= user.username %></p>
+      <p class="font-mono text-sm <%= total > 0 ? 'text-success' : (total < 0 ? 'text-danger' : 'text-muted') %>">
+        <%= total > 0 ? "+" : "" %><%= total.round(2) %> €
+      </p>
     </div>
   <% end %>
 </div>

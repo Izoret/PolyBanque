@@ -1,9 +1,11 @@
-<%= link_to group, style: "display: block; text-decoration: none;" do %>
-  <div class="group card">
+<%= link_to group, class: "block-link" do %>
+  <div class="card group-card flex justify-between items-center">
     <div>
-      <h3><%= group.name %></h3>
-      <p><%= group.description.truncate(50) if group.description? %></p>
+      <h3 style="margin-bottom: 5px;"><%= group.name %></h3>
+      <% if group.description? %>
+        <p class="text-sm text-muted"><%= group.description.truncate(60) %></p>
+      <% end %>
     </div>
-    <div style="color: var(--text-muted);">&rsaquo;</div>
+    <div class="arrow" style="color: var(--primary); font-size: 1.5rem;">&rarr;</div>
   </div>
 <% end %>

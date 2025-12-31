@@ -1,13 +1,11 @@
-<div id="operations-section">
-  <%= link_to "Nouvelle opération", new_group_operation_path(group),
-              id: "btn-add-operation",
-              class: "button" %>
+<div class="mb-4 text-center">
+  <h3 class="text-muted">Historique</h3>
+</div>
 
-  <% if operations.length > 0 %>
-    <h3>Opérations précédentes</h3>
-  <% end %>
-
-  <div id="operations-list">
+<div class="flex flex-col gap-1">
+  <% if @operations.any? %>
     <%= render operations %>
-  </div>
+  <% else %>
+    <p class="text-muted text-center text-sm mt-4">Aucune dépense enregistrée.</p>
+  <% end %>
 </div>

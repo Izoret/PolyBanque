@@ -1,11 +1,13 @@
 <%= link_to edit_operation_path(operation) do %>
-  <div class="operation card">
-    <div class="info">
-      <h3><%= operation.name %></h3>
-      <p><%= operation.date.strftime("%d/%m") if operation.date %></p>
-    </div>
-    <div class="amount">
-      <%= number_to_currency(operation.total_amount, unit: "€", format: "%n %u") %>
+  <div class="card operation-card" style="padding: 15px; margin-bottom: 8px;">
+    <div class="flex justify-between items-center">
+      <div class="flex flex-col">
+        <span style="font-weight: 600;"><%= operation.name %></span>
+        <span class="text-sm text-muted"><%= operation.author.username %> • <%= operation.date.strftime("%d/%m") if operation.date %></span>
+      </div>
+      <div class="amount font-mono" style="font-size: 1.1rem;">
+        <%= number_to_currency(operation.total_amount, unit: "€", format: "%n %u") %>
+      </div>
     </div>
   </div>
 <% end %>

@@ -1,7 +1,9 @@
-<% page_header "#{@operation.group.name} - #{@operation.name}" %>
+<% page_header("Modification d'une dépense", @operation.group.name) %>
 
 <%= render "form", operation: @operation, target: operation_path(@operation) %>
 
-<%= button_to "Supprimer", @operation, method: :delete, data: { turbo_confirm: "Assumeriez-vous une telle perte de patrimoine ? Cette action aura des conséquences." } %>
+<div class="danger-zone">
+<%= button_to "Supprimer", @operation, method: :delete, data: { turbo_confirm: "Assumeriez-vous une telle perte de patrimoine ? Cette action aura des conséquences." }, class: "btn btn-danger-outline btn-auto" %>
+</div>
 
 <% page_footer group_path @operation.group %>

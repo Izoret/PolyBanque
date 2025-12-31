@@ -1,18 +1,35 @@
 <header>
-  <%= link_to root_path do %>
-    <h1>PolyBanque</h1>
-  <% end %>
+  <div class="nav-container">
+    <nav>
+      <div class="logo flex items-center">
+        <%= link_to root_path do %>
+          <h1>PolyBanque</h1>
+        <% end %>
 
-  <% if content_for?(:page_header) %>
-    <h2><%= yield :page_header %></h2>
-  <% end %>
+        <% if content_for?(:page_header) %>
+          <span class="page-title">/ <%= yield :page_header %></span>
+        <% end %>
+      </div>
 
-  <nav>
-    <% if authenticated? %>
-      <h3>Coucou, <%= Current.user.username %> !</h3>
-      <%= button_to "Déconnexion", session_path, method: :delete, class: "btn-logout" %>
-    <% else %>
-      <h3>Bienvenue, voyageur !</h3>
+      <div class="user-nav">
+        <% if authenticated? %>
+          <h3 style="display: none;">Coucou, <%= Current.user.username %> !</h3>
+          <%= button_to "Déconnexion", session_path, method: :delete, class: "btn-logout" %>
+        <% else %>
+          <h3 class="text-sm text-muted">Bienvenue, voyageur !</h3>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+
+  <%= render "layouts/flashes" %>
+
+  <div id="header-title" class="text-center">
+    <% if content_for?(:page_header) %>
+      <h1><%= yield :page_header %></h1>
     <% end %>
-  </nav>
+    <% if content_for?(:page_subtitle) %>
+      <p class="text-muted"><%= yield :page_subtitle %></p>
+    <% end %>
+  </div>
 </header>
