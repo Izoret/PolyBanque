@@ -1,9 +1,30 @@
-<% page_header "Mot de passe oublié ?" %>
+<% page_header "Récupération de mot de passe" %>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<div class="auth-wrapper">
+  <div class="card">
+    <div class="text-center mb-4">
+      <h2>Mot de passe oublié ?</h2>
+      <p class="text-muted text-sm">Entrez votre e-mail pour recevoir les instructions.</p>
+    </div>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %>
-  <br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+    <% if flash[:alert] %>
+      <div class="mb-4 text-center text-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <%= form_with url: passwords_path do |form| %>
+      <div class="form-group">
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Votre adresse e-mail", value: params[:email_address] %>
+      </div>
+
+      <div class="mt-4">
+        <%= form.submit "Envoyer les instructions", class: "btn btn-primary w-full" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to "Annuler", new_session_path, class: "text-sm text-muted" %>
+  </div>
+</div>

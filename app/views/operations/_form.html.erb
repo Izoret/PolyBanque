@@ -1,7 +1,9 @@
 <%= form_with(model: operation, url: target, local: true, data: { controller: 'operation-form' }) do |form| %>
+
   <% if operation.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
+    <div class="card mb-4" style="border-color: var(--danger); background: var(--danger-bg);">
+      <p class="text-danger text-center"><%= pluralize(operation.errors.count, "error") %> prohibited this
+        operation:</p>
       <ul>
         <% operation.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,64 +12,72 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, "Nom" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, "Quoi ?" %>
+    <%= form.text_field :name, placeholder: "Ex: Courses, Restaurant..." %>
   </div>
 
-  <div>
-    <%= form.label :date %>
-    <%= form.date_field :date %>
+  <div class="flex gap-2">
+    <div class="form-group w-full">
+      <%= form.label :total_amount, "Montant" %>
+      <%= form.number_field :total_amount, step: 0.01, class: "font-mono",
+                            data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
+    </div>
+    <div class="form-group w-full">
+      <%= form.label :date %>
+      <%= form.date_field :date %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :author_id, "Auteur (la personne qui a payé)" %>
-    <%= form.collection_select :author_id, operation.group.users, :id, :username %>
+  <div class="form-group">
+    <%= form.label :author_id, "Qui a payé ?" %>
+    <%= form.collection_select :author_id, operation.group.users, :id, :username, {}, { class: "w-full" } %>
   </div>
 
-  <hr>
+  <div class="mt-6">
+    <div class="flex justify-between items-center mb-2">
+      <h3>Pour qui ?</h3>
+      <div class="flex gap-1">
+        <button type="button" class="badge btn-ghost" style="cursor: pointer; border: 1px solid var(--secondary);"
+                data-action="click->operation-form#selectAll">Tous
+        </button>
+        <button type="button" class="badge btn-ghost" style="cursor: pointer; border: 1px solid var(--secondary);"
+                data-action="click->operation-form#splitEqually">Équitable
+        </button>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :total_amount %>
-    <%= form.number_field :total_amount, step: 0.01, data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
-  </div>
+    <div class="participation-grid">
+      <%= form.fields_for :participations do |p_form| %>
+        <div class="participation-wrapper">
+          <label style="cursor: pointer; width: 100%; display: block;">
 
-  <div style="margin-bottom: 20px;">
-    <button type="button" data-action="click->operation-form#selectAll">Tout sélectionner</button>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold"><%= p_form.object.user.username %></span>
 
-    <button type="button" data-action="click->operation-form#splitEqually">Partager équitablement</button>
-  </div>
+              <%= p_form.check_box :_destroy,
+                                   {
+                                     checked: p_form.object.amount_share.to_f > 0,
+                                     data: { 'operation-form-target': 'participationToggle', action: 'change->operation-form#toggleParticipation' }
+                                   },
+                                   "0", "1"
+              %>
+            </div>
 
-  <h3>Participations</h3>
+            <%= p_form.hidden_field :user_id %>
 
-  <div style="display: flex; flex-wrap: wrap; gap: 15px;">
-    <%= form.fields_for :participations do |participation_form| %>
-      <fieldset class="participation-wrapper" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; flex: 1; min-width: 150px; text-align: center;">
-        <div style="margin-bottom: 5px;">
-          <label style="font-size: 0.9em; cursor: pointer;">
-            <input type="checkbox"
-                   data-operation-form-target="participationToggle"
-                   data-action="change->operation-form#toggleParticipation"
-                   <%= 'checked' if participation_form.object.amount_share.to_f > 0 %>
-            >Participe
+            <%= p_form.number_field :amount_share, step: 0.01, placeholder: "0.00",
+                                    class: "participation-input font-mono",
+                                    data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#onAmountInput' } %>
           </label>
         </div>
-
-        <legend style="font-weight: bold; margin-bottom: 5px;"><%= participation_form.object.user.username %></legend>
-
-        <%= participation_form.hidden_field :user_id %>
-
-        <div>
-          <%= participation_form.number_field :amount_share, step: 0.01, style: "width: 100%; box-sizing: border-box;", data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#onAmountInput' } %>
-        </div>
-      </fieldset>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div data-operation-form-target="validationMessage" style="color: red; margin-top: 20px;">
-  </div>
+  <div data-operation-form-target="validationMessage" class="text-center text-danger mt-4"></div>
 
-  <div style="margin-top: 20px;">
-    <%= form.submit "Save", data: { 'operation-form-target': 'submitButton' } %>
+  <div class="sticky-bottom-action">
+    <%= form.submit "Sauvegarder", class: "btn btn-primary w-full shadow-glass", data: { 'operation-form-target': 'submitButton' } %>
   </div>
 <% end %>

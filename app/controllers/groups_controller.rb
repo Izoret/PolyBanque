@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
   end
 
   def quit
-    @group.users.delete(Current.user)
+    @group.users.delete Current.user
 
     destroy @group if @group.users.empty?
 
