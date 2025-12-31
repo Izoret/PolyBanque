@@ -8,7 +8,7 @@ services:
     image: polybanque-dev
     container_name: polybanque-dev
     ports:
-      - "3002:3000"
+      - "3000:3000"
     volumes:
       - .:/rails
     environment:
