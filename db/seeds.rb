@@ -28,7 +28,7 @@ Membership.create!(user: raph, group: ski_trip)
 Membership.create!(user: raph, group: italie)
 
 puts "Creating Operation: Welcome Dinner..."
-dinner_op = Operation.create!(
+dinner_op = Operation.new!(
   name: "Welcome Dinner",
   total_amount: 150.00,
   date: DateTime.now - 2.days,
@@ -43,6 +43,8 @@ dinner_op = Operation.create!(
     amount_share: 50.00
   )
 end
+
+dinner_op.save!
 
 puts "Creating Operation: Gas..."
 gas_op = Operation.create!(
