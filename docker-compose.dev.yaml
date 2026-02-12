@@ -1,19 +1,19 @@
-version: "3.9"
-
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    image: polybanque-dev
+    image: ruby:3.4.5
     container_name: polybanque-dev
     ports:
       - "3000:3000"
     volumes:
-      - .:/rails
+      - .:/app
+      - bundle_cache:/usr/local/bundle
     environment:
       RAILS_ENV: development
-    command: bin/rails server -b 0.0.0.0
-    stdin_open: true
+    working_dir: /app
+    entrypoint: /app/bin/docker-entrypoint.dev
+    command: bundle exec rails server -b 0.0.0.0
     tty: true
+    stdin_open: true
 
+volumes:
+  bundle_cache:
