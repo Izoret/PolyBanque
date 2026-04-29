@@ -1,8 +1,6 @@
 services:
   db:
     image: postgres:15
-    container_name: polybanque_db
-    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -15,7 +13,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: polybanque
-    container_name: polybanque_web
     ports:
       - "3002:3000"
     depends_on:

@@ -1,7 +1,6 @@
 services:
-  web:
+  web-dev:
     image: ruby:3.4.5
-    container_name: polybanque-dev
     ports:
       - "3000:3000"
     volumes:
