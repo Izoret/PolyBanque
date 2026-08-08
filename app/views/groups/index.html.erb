@@ -1,4 +1,4 @@
-<% page_header("Index", "Gérez vos PolyBanques") %>
+<% page_header("Index", "Gérez vos groupes BankIz") %>
 
 <div id="groups-list" class="flex flex-col gap-4">
   <% if @groups.any? %>
@@ -11,5 +11,5 @@
 </div>
 
 <div class="text-center" style="margin-top: 30px;">
-  <%= link_to "Créer une PolyBanque", new_group_path, id: "create-bank", class: "btn btn-ghost" %>
+  <%= link_to "Créer une BankIz", new_group_path, id: "create-bank", class: "btn btn-ghost" %>
 </div>

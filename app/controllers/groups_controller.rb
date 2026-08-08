@@ -47,7 +47,7 @@ class GroupsController < ApplicationController
     @group.users = [ Current.user ]
 
     if @group.save
-      redirect_to groups_path, notice: "PolyBanque créée avec succès."
+      redirect_to groups_path, notice: "BankIz créée avec succès."
     else
       render :new
     end
