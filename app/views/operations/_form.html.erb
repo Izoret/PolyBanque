@@ -21,7 +21,7 @@
   <div class="flex gap-2">
     <div class="form-group w-full">
       <%= form.label :total_amount, "Montant" %>
-      <%= form.number_field :total_amount, step: 0.01, class: "font-mono",
+      <%= form.number_field :total_amount, step: "any", class: "font-mono",
                             data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
     </div>
     <div class="form-group w-full">
@@ -64,7 +64,7 @@
 
             <%= p_form.hidden_field :user_id %>
 
-            <%= p_form.number_field :amount_share, step: 0.01, placeholder: "0.00",
+            <%= p_form.number_field :amount_share, step: "any", placeholder: "0.00",
                                     class: "participation-input font-mono",
                                     data: { 'operation-form-target': 'amountShare', action: 'input->operation-form#onAmountInput' } %>
           </label>
