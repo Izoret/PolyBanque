@@ -14,7 +14,7 @@
 
   <div class="form-group">
     <%= form.label :name, "Quoi ?" %>
-    <%= form.text_field :name, placeholder: "Ex: Courses, Restaurant...", required: true,
+    <%= form.text_field :name, placeholder: "Ex: Courses, Restaurant...", required: true, autofocus: true,
                         data: { 'operation-form-target': 'name', action: 'input->operation-form#checkValidity' } %>
   </div>
 
