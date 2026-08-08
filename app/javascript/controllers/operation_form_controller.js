@@ -19,14 +19,6 @@ export default class extends Controller {
         })
     }
 
-    selectAll() {
-        this.participationToggleTargets.forEach((checkbox) => {
-            checkbox.checked = true
-        })
-        this.updateWrapperStates()
-        this.checkValidity()
-    }
-
     splitEqually() {
         const total = this.getTotalAmount()
         // On ne divise qu'entre ceux qui sont cochés
