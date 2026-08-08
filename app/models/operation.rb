@@ -1,11 +1,11 @@
 class Operation < ApplicationRecord
   belongs_to :group
-
   belongs_to :author, class_name: "User"
 
   has_many :participations, dependent: :destroy
   has_many :participants, through: :participations, source: :user
 
+  validates :name, presence: true
   validates :total_amount, numericality: { greater_than: 0 }
   validate :amount_must_match_participations_sum
 

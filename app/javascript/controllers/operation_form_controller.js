@@ -1,7 +1,7 @@
 import {Controller} from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["totalAmount", "amountShare", "submitButton", "participationToggle", "participationWrapper"]
+    static targets = ["name", "totalAmount", "amountShare", "submitButton", "participationToggle", "participationWrapper"]
 
     connect() {
         this.updateWrapperStates()
@@ -88,14 +88,16 @@ export default class extends Controller {
     }
 
     checkValidity() {
+        const name = this.hasNameTarget ? this.nameTarget.value.trim() : ""
         const total = this.getTotalAmount()
         const sum = this.getSumOfShares()
         const diff = total - sum
 
+        const isNameValid = name.length > 0
         const isTotalValid = total > 0
         const isSumValid = Math.abs(diff) <= 0.011
 
-        const isValid = isTotalValid && isSumValid
+        const isValid = isNameValid && isTotalValid && isSumValid
 
         if (this.hasSubmitButtonTarget) {
             const button = this.submitButtonTarget
@@ -110,7 +112,9 @@ export default class extends Controller {
             button.disabled = true
             button.classList.add("btn-error")
 
-            if (!isTotalValid) {
+            if (!isNameValid) {
+                button.value = "Le nom est obligatoire."
+            } else if (!isTotalValid) {
                 button.value = "Le montant total doit être supérieur à 0."
             } else {
                 button.value = `La somme des parts (${sum.toFixed(2)}) ≠ Total (${total.toFixed(2)}). Écart: ${Math.abs(diff).toFixed(2)} €`

@@ -32,7 +32,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_28_000000) do
     t.datetime "created_at", null: false
     t.datetime "date"
     t.integer "group_id", null: false
-    t.string "name"
+    t.string "name", null: false
+    t.check_constraint "length(trim(name)) > 0", name: "operations_name_not_empty"
     t.decimal "total_amount", precision: 10, scale: 2
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_operations_on_author_id"
