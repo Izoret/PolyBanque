@@ -8,7 +8,6 @@ export default class extends Controller {
         this.checkValidity()
     }
 
-    // Met à jour visuellement les cartes (ajoute la classe .active)
     updateWrapperStates() {
         this.participationToggleTargets.forEach(checkbox => {
             const wrapper = checkbox.closest('.participation-wrapper')
@@ -40,7 +39,7 @@ export default class extends Controller {
 
         this.amountShareTargets.forEach((input) => {
             const wrapper = input.closest('.participation-wrapper')
-            const checkbox = wrapper.querySelector('input[type="checkbox"]') // Le toggle
+            const checkbox = wrapper.querySelector('input[type="checkbox"]')
 
             if (checkbox.checked) {
                 input.value = equalShare.toFixed(2)
@@ -76,7 +75,7 @@ export default class extends Controller {
         if (!isNaN(value) && value > 0) {
             checkbox.checked = true
         } else if (value === 0) {
-             // Optionnel : décocher si 0 ? Gardons coché pour l'instant pour éviter les erreurs ux
+            checkbox.checked = false
         }
 
         this.updateWrapperStates()
@@ -113,9 +112,9 @@ export default class extends Controller {
             button.classList.add("btn-error")
 
             if (!isNameValid) {
-                button.value = "Le nom est obligatoire."
+                button.value = "Faut rentrer un nom !"
             } else if (!isTotalValid) {
-                button.value = "Le montant total doit être supérieur à 0."
+                button.value = "Faut un montant positif !"
             } else {
                 button.value = `La somme des parts (${sum.toFixed(2)}) ≠ Total (${total.toFixed(2)}). Écart: ${Math.abs(diff).toFixed(2)} €`
             }
