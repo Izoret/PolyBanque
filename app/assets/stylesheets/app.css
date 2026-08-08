@@ -347,6 +347,15 @@ footer > nav {
     transform: scale(1.02);
 }
 
+.btn.btn-error {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .btn-ghost {
     background: transparent;
     border: 1px solid var(--secondary);

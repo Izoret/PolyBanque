@@ -1,7 +1,7 @@
 import {Controller} from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["totalAmount", "amountShare", "submitButton", "validationMessage", "participationToggle", "participationWrapper"]
+    static targets = ["totalAmount", "amountShare", "submitButton", "participationToggle", "participationWrapper"]
 
     connect() {
         this.updateWrapperStates()
@@ -98,16 +98,22 @@ export default class extends Controller {
         const isValid = isTotalValid && isSumValid
 
         if (this.hasSubmitButtonTarget) {
-            this.submitButtonTarget.disabled = !isValid
-        }
+            const button = this.submitButtonTarget
 
-        if (this.hasValidationMessageTarget) {
-            this.validationMessageTarget.innerHTML = ""
+            if (isValid) {
+                button.disabled = false
+                button.value = "Sauvegarder"
+                button.classList.remove("btn-error")
+                return
+            }
+
+            button.disabled = true
+            button.classList.add("btn-error")
+
             if (!isTotalValid) {
-                this.validationMessageTarget.innerHTML = "Le montant total doit être supérieur à 0."
-            } else if (!isSumValid) {
-                const formattedDiff = Math.abs(diff).toFixed(2)
-                this.validationMessageTarget.innerHTML = `La somme des parts (${sum.toFixed(2)}) ≠ Total (${total.toFixed(2)}). Écart: ${formattedDiff} €`
+                button.value = "Le montant total doit être supérieur à 0."
+            } else {
+                button.value = `La somme des parts (${sum.toFixed(2)}) ≠ Total (${total.toFixed(2)}). Écart: ${Math.abs(diff).toFixed(2)} €`
             }
         }
     }
