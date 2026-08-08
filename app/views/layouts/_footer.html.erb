@@ -1,17 +1,19 @@
-<footer>
-  <nav>
-    <% if content_for? :page_footer
-         route = yield :page_footer
-         label = "Retour"
-       else
-         route = root_path
-         label = "Accueil"
-       end
-    %>
+<% unless current_page? root_path %>
+  <footer>
+    <nav>
+      <% if content_for? :page_footer
+           route = yield :page_footer
+           label = "Retour"
+         else
+           route = root_path
+           label = "Accueil"
+         end
+      %>
 
-    <%= link_to route, class: "nav-link-back" do %>
-      <span>&larr;</span>
-      <span><%= label %></span>
-    <% end %>
-  </nav>
-</footer>
+      <%= link_to route, class: "nav-link-back" do %>
+        <span>&larr;</span>
+        <span><%= label %></span>
+      <% end %>
+    </nav>
+  </footer>
+<% end %>
