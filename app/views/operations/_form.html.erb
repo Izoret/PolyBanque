@@ -22,7 +22,7 @@
     <div class="form-group w-full">
       <%= form.label :total_amount, "Montant" %>
       <%= form.number_field :total_amount, step: "any", class: "font-mono",
-                            data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#updateParticipations' } %>
+                            data: { 'operation-form-target': 'totalAmount', action: 'input->operation-form#splitEqually' } %>
     </div>
     <div class="form-group w-full">
       <%= form.label :date %>
@@ -38,11 +38,6 @@
   <div class="mt-6">
     <div class="flex justify-between items-center mb-2">
       <h3>Pour qui ?</h3>
-      <div class="flex gap-1">
-        <button type="button" class="badge btn-ghost" style="cursor: pointer; border: 1px solid var(--secondary);"
-                data-action="click->operation-form#splitEqually">Équitable
-        </button>
-      </div>
     </div>
 
     <div class="participation-grid">

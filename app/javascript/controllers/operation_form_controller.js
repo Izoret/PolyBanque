@@ -1,7 +1,7 @@
 import {Controller} from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["name", "totalAmount", "amountShare", "submitButton", "participationToggle", "participationWrapper"]
+    static targets = ["name", "totalAmount", "amountShare", "submitButton", "participationToggle"]
 
     connect() {
         this.updateWrapperStates()
@@ -25,9 +25,7 @@ export default class extends Controller {
         const participatingToggles = this.participationToggleTargets.filter(t => t.checked)
         const sharesCount = participatingToggles.length
 
-        if (sharesCount === 0) return
-
-        const equalShare = total / sharesCount
+        const equalShare = sharesCount > 0 ? total / sharesCount : 0
 
         this.amountShareTargets.forEach((input) => {
             const wrapper = input.closest('.participation-wrapper')
@@ -43,18 +41,9 @@ export default class extends Controller {
         this.checkValidity()
     }
 
-    toggleParticipation(event) {
-        const checkbox = event.target
-        const wrapper = checkbox.closest('.participation-wrapper')
-        const input = wrapper.querySelector('[data-operation-form-target="amountShare"]')
-
-        // Si on décoche, on met à 0
-        if (!checkbox.checked) {
-            input.value = "0.00"
-        }
-
+    toggleParticipation() {
         this.updateWrapperStates()
-        this.checkValidity()
+        this.splitEqually()
     }
 
     onAmountInput(event) {
@@ -71,10 +60,6 @@ export default class extends Controller {
         }
 
         this.updateWrapperStates()
-        this.checkValidity()
-    }
-
-    updateParticipations() {
         this.checkValidity()
     }
 
